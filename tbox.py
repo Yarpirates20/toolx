@@ -17,18 +17,23 @@ def get_args():
     parser = argparse.ArgumentParser(
         description='Hacking Toolbox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    
+    parser.add_argument('text',
+                        metavar='str',
+                        help='Input text or file')
+
+    parser.add_argument('-r',
+                        '--rot13',
+                        metavar='str',
+                        help='Decipher a ROT13 encrypted text',
+                        type=str)
 
     parser.add_argument('-d',
-                        '--decipher',
-                        metavar='str',
-                        help='Decipher a ROT13 encrypted text')
-
-    parser.add_argument('-a',
-                        '--arg',
-                        help='A named string argument',
+                        '--decode',
+                        help='Decodes a string from binary, hex, or base64',
                         metavar='str',
                         type=str,
-                        default='')
+                        choices=['bin', 'hex', 'b64'],)
 
     parser.add_argument('-i',
                         '--int',
@@ -57,17 +62,8 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    str_arg = args.arg
-    int_arg = args.int
-    file_arg = args.file
-    flag_arg = args.on
-    pos_arg = args.positional
 
-    print(f'str_arg = "{str_arg}"')
-    print(f'int_arg = "{int_arg}"')
-    print('file_arg = "{}"'.format(file_arg.name if file_arg else ''))
-    print(f'flag_arg = "{flag_arg}"')
-    print(f'positional = "{pos_arg}"')
+    print(rot13(args.rot13))
 
 
 # --------------------------------------------------
