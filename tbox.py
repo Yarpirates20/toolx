@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-Author : Rob Samoraj <snailfail@vivaldi.net>
+Author : Rob Samoraj <rsamoraj@vivaldi.net>
 Date   : 2023-12-19
 Purpose: Hacking Toolbox Command Line Program
 """
 
 import argparse
-
+from Cryptography import rot13
 
 # --------------------------------------------------
+
+
 def get_args():
     """Get command-line arguments"""
 
@@ -16,9 +18,10 @@ def get_args():
         description='Hacking Toolbox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('positional',
+    parser.add_argument('-d',
+                        '--decipher',
                         metavar='str',
-                        help='A positional argument')
+                        help='Decipher a ROT13 encrypted text')
 
     parser.add_argument('-a',
                         '--arg',
