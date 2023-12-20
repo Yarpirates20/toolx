@@ -18,9 +18,11 @@ def get_args():
         description='Hacking Toolbox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     
-    parser.add_argument('text',
-                        metavar='str',
-                        help='Input text or file')
+    # parser.add_argument('text',
+    #                     metavar='str',
+    #                     help='Input text or file',
+    #                     type=str,
+    #                     default='')
 
     parser.add_argument('-r',
                         '--rot13',
@@ -63,6 +65,7 @@ def main():
 
     args = get_args()
 
+    
     print(rot13(args.rot13))
 
 
