@@ -6,50 +6,61 @@ Purpose: Hacking Toolbox Command Line Program
 """
 
 import argparse
-from Cryptography import rot13, binary_decode
+from Cryptography import *
+
 
 # --------------------------------------------------
-
-
 def get_args():
     """Get command-line arguments"""
 
     # Global parser
     global_parser = argparse.ArgumentParser(
         prog="tbox",
-        description='Hacking Toolbox',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    
-    subparsers = global_parser.add_subparsers(title='command', help='sub-command help', dest='command')
-    
-    """ # global_parser.add_argument('text',
-    #                     metavar='str',
-    #                     help='Input text or file',
-    #                     type=str,
-    #                     default='') """
+        description="Hacking Toolbox",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    # Subparsers
+    subparsers = global_parser.add_subparsers(
+        title="command",
+        help="sub-command help",
+        dest="command",
+        metavar="COMMAND",
+    )
 
     # Decode subparser
-    decode_args_template = {
-        'dest': 'cipher',
-        'type': 'str',
-        'metavar': 'str',
-        'help': 'A ciphered string',
-    }
+    """ decode_args_template = {
+        "dest": "cipher",
+        "type": "str",
+        "metavar": "str",
+        "help": "A ciphered string",
+    } """
 
-    decode_parser = subparsers.add_parser('decode', help='Decode a string from several common encodings')
+    decode_parser = subparsers.add_parser(
+        "decode",
+        help="Decode a string from several common encodings",
+    )
 
-    # decode_parser.add_argument('text',
-    #                     metavar='str',
-    #                     help='Input text or file',
-    #                     type=str)
-    decode_parser.add_argument('-b',
-                        '--bin',
-                        help='Decodes a binary string',
-                        metavar='str',
-                        type=str)
-    
+    decode_parser.add_argument("-b",
+                               "--bin",
+                               help="Decodes a binary string",
+                               metavar="str",
+                               type=str)
     decode_parser.set_defaults(func=binary_decode)
-                               
+
+    decode_parser.add_argument("-x",
+                               "--hex",
+                               help="Decodes a hex string",
+                               metavar="str",
+                               type=str)
+    decode_parser.set_defaults(func=hex_decode)
+
+    decode_parser.add_argument("-b64",
+                                 "--base64",
+                                 help="Decodes a base64 string",
+                                 metavar="str",
+                                 type=str)
+    decode_parser.set_defaults(func=base64_decode)
+
     """ global_parser.add_argument('-r',
                         '--rot13',
                         metavar='str',
@@ -63,25 +74,6 @@ def get_args():
                         type=str,
                         choices=['bin', 'hex', 'b64'],) """
 
-    """ global_parser.add_argument('-i',
-                        '--int',
-                        help='A named integer argument',
-                        metavar='int',
-                        type=int,
-                        default=0)
-
-    global_parser.add_argument('-f',
-                        '--file',
-                        help='A readable file',
-                        metavar='FILE',
-                        type=argparse.FileType('rt'),
-                        default=None)
-
-    global_parser.add_argument('-o',
-                        '--on',
-                        help='A boolean flag',
-                        action='store_true') """
-
     return global_parser.parse_args()
 
 
@@ -91,14 +83,10 @@ def main():
 
     args = get_args()
 
-    
-    if args.command == 'decode':
-        print(args.func(args.bin))
-    
-
-    
+    if args.command == "decode":
+        args.func(args)
 
 
 # --------------------------------------------------
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
