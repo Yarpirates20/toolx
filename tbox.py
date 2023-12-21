@@ -6,7 +6,7 @@ Purpose: Hacking Toolbox Command Line Program
 """
 
 import argparse
-from Cryptography import rot13
+from Cryptography import rot13, binary_decode
 
 # --------------------------------------------------
 
@@ -14,49 +14,75 @@ from Cryptography import rot13
 def get_args():
     """Get command-line arguments"""
 
-    parser = argparse.ArgumentParser(
+    # Global parser
+    global_parser = argparse.ArgumentParser(
+        prog="tbox",
         description='Hacking Toolbox',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     
-    # parser.add_argument('text',
+    subparsers = global_parser.add_subparsers(title='command', help='sub-command help', dest='command')
+    
+    """ # global_parser.add_argument('text',
     #                     metavar='str',
     #                     help='Input text or file',
     #                     type=str,
-    #                     default='')
+    #                     default='') """
 
-    parser.add_argument('-r',
+    # Decode subparser
+    decode_args_template = {
+        'dest': 'cipher',
+        'type': 'str',
+        'metavar': 'str',
+        'help': 'A ciphered string',
+    }
+
+    decode_parser = subparsers.add_parser('decode', help='Decode a string from several common encodings')
+
+    # decode_parser.add_argument('text',
+    #                     metavar='str',
+    #                     help='Input text or file',
+    #                     type=str)
+    decode_parser.add_argument('-b',
+                        '--bin',
+                        help='Decodes a binary string',
+                        metavar='str',
+                        type=str)
+    
+    decode_parser.set_defaults(func=binary_decode)
+                               
+    """ global_parser.add_argument('-r',
                         '--rot13',
                         metavar='str',
                         help='Decipher a ROT13 encrypted text',
                         type=str)
 
-    parser.add_argument('-d',
+    global_parser.add_argument('-d',
                         '--decode',
                         help='Decodes a string from binary, hex, or base64',
                         metavar='str',
                         type=str,
-                        choices=['bin', 'hex', 'b64'],)
+                        choices=['bin', 'hex', 'b64'],) """
 
-    parser.add_argument('-i',
+    """ global_parser.add_argument('-i',
                         '--int',
                         help='A named integer argument',
                         metavar='int',
                         type=int,
                         default=0)
 
-    parser.add_argument('-f',
+    global_parser.add_argument('-f',
                         '--file',
                         help='A readable file',
                         metavar='FILE',
                         type=argparse.FileType('rt'),
                         default=None)
 
-    parser.add_argument('-o',
+    global_parser.add_argument('-o',
                         '--on',
                         help='A boolean flag',
-                        action='store_true')
+                        action='store_true') """
 
-    return parser.parse_args()
+    return global_parser.parse_args()
 
 
 # --------------------------------------------------
@@ -66,7 +92,11 @@ def main():
     args = get_args()
 
     
-    print(rot13(args.rot13))
+    if args.command == 'decode':
+        print(args.func(args.bin))
+    
+
+    
 
 
 # --------------------------------------------------

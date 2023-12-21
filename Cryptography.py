@@ -19,14 +19,14 @@ def rot13(text):
 
     return ''.join(result)
 
-# Decode a string from binary, hex, or base64
-def decode(cipher, choice):
-    if choice == 'bin':
-        cipher = cipher.split()
-        return ''.join([chr(int(cipher[i],base=2)) for i in range(0, len(cipher))])
-    elif choice == 'hex':
-        return ''.join([chr(int(cipher[i] + cipher[i+1],base=16)) for i in range(0,len(cipher),2)])
+# Decode a string from binary
+def binary_decode(text):
+    text = text.split()
+    return ''.join([chr(int(text[i],base=2))for i in range(0, len(text))])
+   
+    """ elif choice == 'hex':
+        return ''.join([chr(int(text[i] + text[i+1],base=16)) for i in range(0,len(text),2)])
     elif choice == 'b64':
-        return base64.b64decode(cipher)
+        return base64.b64decode(text)
     else:
-        return "Invalid choice"
+        return "Invalid choice" """
