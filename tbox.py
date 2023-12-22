@@ -50,18 +50,11 @@ def get_args():
                                  action="store",)
     decode_parser.set_defaults(func=base64_decode)
 
-    """ global_parser.add_argument('-r',
-                        '--rot13',
-                        metavar='str',
-                        help='Decipher a ROT13 encrypted text',
-                        type=str)
-
-    global_parser.add_argument('-d',
-                        '--decode',
-                        help='Decodes a string from binary, hex, or base64',
-                        metavar='str',
-                        type=str,
-                        choices=['bin', 'hex', 'b64'],) """
+    decode_parser.add_argument("-r13",
+                               "--rot13",
+                               help="Decodes a ROT13 string",
+                               action="store",)
+    decode_parser.set_defaults(func=rot13)
 
     return global_parser.parse_args()
 
@@ -84,6 +77,8 @@ def main():
             hex_decode(args.hex)
         if args.base64 is not None:
             base64_decode(args.base64)
+        if args.rot13 is not None:
+            rot13(args.rot13)
 
 
 # --------------------------------------------------

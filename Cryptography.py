@@ -19,13 +19,16 @@ def rot13(text):
         else:
             result.append(char)
 
-    return "".join(result)
+    print("".join(result))
 
 
 # Decode a string from binary
 def binary_decode(text):
     text = text.split()
-    print("".join([chr(int(text[i], base=2)) for i in range(0, len(text))]))
+    try:
+        print("".join([chr(int(text[i], base=2)) for i in range(0, len(text))]))
+    except OverflowError:
+        print("Binary string too large")
 
 # Decode a string from hex
 def hex_decode(text):
