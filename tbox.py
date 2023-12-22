@@ -21,44 +21,33 @@ def get_args():
     )
     # Subparsers
     subparsers = global_parser.add_subparsers(
-        title="command",
-        help="sub-command help",
         dest="command",
-        metavar="COMMAND",
+        help="Commands to run",
+        required=True
     )
 
     # Decode subparser
-    """ decode_args_template = {
-        "dest": "cipher",
-        "type": "str",
-        "metavar": "str",
-        "help": "A ciphered string",
-    } """
-
     decode_parser = subparsers.add_parser(
         "decode",
-        help="Decode a string from several common encodings",
+        help="Decode a string from binary, hex, or base64"
     )
 
     decode_parser.add_argument("-b",
                                "--bin",
                                help="Decodes a binary string",
-                               metavar="str",
-                               type=str)
+                               action="store",)
     decode_parser.set_defaults(func=binary_decode)
 
     decode_parser.add_argument("-x",
                                "--hex",
                                help="Decodes a hex string",
-                               metavar="str",
-                               type=str)
+                               action="store",)
     decode_parser.set_defaults(func=hex_decode)
 
     decode_parser.add_argument("-b64",
                                  "--base64",
                                  help="Decodes a base64 string",
-                                 metavar="str",
-                                 type=str)
+                                 action="store",)
     decode_parser.set_defaults(func=base64_decode)
 
     """ global_parser.add_argument('-r',
@@ -82,9 +71,19 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
+    
+    # args_ = vars(args).copy()
+    # args_.pop('command', None)
+    # args_.pop('func', None)
+    # args.func(**args_)
 
     if args.command == "decode":
-        args.func(args)
+        if args.bin is not None:
+            binary_decode(args.bin)
+        if args.hex is not None:
+            hex_decode(args.hex)
+        if args.base64 is not None:
+            base64_decode(args.base64)
 
 
 # --------------------------------------------------
