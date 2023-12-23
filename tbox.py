@@ -6,6 +6,7 @@ Purpose: Hacking Toolbox Command Line Program
 """
 
 import argparse
+from ARP import *
 from Cryptography import *
 
 
@@ -13,12 +14,15 @@ from Cryptography import *
 def get_args():
     """Get command-line arguments"""
 
+
     # Global parser
     global_parser = argparse.ArgumentParser(
         prog="tbox",
         description="Hacking Toolbox",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+
+    #----------------------------------------------
     # Subparsers
     subparsers = global_parser.add_subparsers(
         dest="command",
@@ -26,6 +30,7 @@ def get_args():
         required=True
     )
 
+    #----------------------------------------------
     # Decode subparser
     decode_parser = subparsers.add_parser(
         "decode",
@@ -55,7 +60,21 @@ def get_args():
                                help="Decodes a ROT13 string",
                                action="store",)
     decode_parser.set_defaults(func=rot13)
+    #----------------------------------------------
+    # ARP subparser
+    """ arp_parser = subparsers.add_parser(
+        "arp",
+        help="ARP Tools"
+    )
 
+    arp_parser.add_argument("-s",
+                            "--scan",
+                            help="Scans the network for hosts",
+                            action="store",)
+    arp_parser.set_defaults(func=arpScan) """
+    
+
+    #----------------------------------------------
     return global_parser.parse_args()
 
 
@@ -64,11 +83,6 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    
-    # args_ = vars(args).copy()
-    # args_.pop('command', None)
-    # args_.pop('func', None)
-    # args.func(**args_)
 
     if args.command == "decode":
         if args.bin is not None:
@@ -79,6 +93,10 @@ def main():
             base64_decode(args.base64)
         if args.rot13 is not None:
             rot13(args.rot13)
+
+    # if args.command == "arp":
+    #     if args.scan is not None:
+    #         arpScan(args.scan)
 
 
 # --------------------------------------------------
