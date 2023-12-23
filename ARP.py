@@ -14,11 +14,12 @@ def inputIPAddr():
 
 def arpScan(text=""):
 
-    if text != "":
-        ip_range = text
-        bitmask = "24"
-    else:
-        ip_range, bitmask = inputIPAddr()
+    # if text != "":
+    #     ip_range = text
+    #     bitmask = "24"
+    # else:
+    
+    ip_range, bitmask = inputIPAddr()
 
     broadcase = "ff:ff:ff:ff:ff:ff"
     ether_layer = Ether(dst=broadcase)

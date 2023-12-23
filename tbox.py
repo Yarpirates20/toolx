@@ -62,7 +62,7 @@ def get_args():
     decode_parser.set_defaults(func=rot13)
     #----------------------------------------------
     # ARP subparser
-    """ arp_parser = subparsers.add_parser(
+    arp_parser = subparsers.add_parser(
         "arp",
         help="ARP Tools"
     )
@@ -71,7 +71,7 @@ def get_args():
                             "--scan",
                             help="Scans the network for hosts",
                             action="store",)
-    arp_parser.set_defaults(func=arpScan) """
+    arp_parser.set_defaults(func=arpScan)
     
 
     #----------------------------------------------
@@ -94,9 +94,9 @@ def main():
         if args.rot13 is not None:
             rot13(args.rot13)
 
-    # if args.command == "arp":
-    #     if args.scan is not None:
-    #         arpScan(args.scan)
+    if args.command == "arp":
+        if args.scan is not None:
+            arpScan(args.scan)
 
 
 # --------------------------------------------------
